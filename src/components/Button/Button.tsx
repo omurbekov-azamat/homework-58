@@ -1,13 +1,14 @@
 import React from 'react';
 
 interface Props extends React.PropsWithChildren {
-  className: string;
-  onClick: React.MouseEventHandler
+  type: string;
+  onClick: React.MouseEventHandler;
+  label: string;
 }
 
-const Button: React.FC<Props> = ({className ,onClick,children}) => {
+const Button: React.FC<Props> = ({type ,onClick,label}) => {
   return (
-      <button className={className} onClick={onClick}>{children}</button>
+      <button className={type} onClick={onClick}>{label}</button>
   );
 };
 
