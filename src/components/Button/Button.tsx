@@ -1,8 +1,12 @@
 import React from 'react';
 
-const Button = () => {
+interface Props extends React.PropsWithChildren {
+  className: string;
+}
+
+const Button: React.FC<Props> = ({className,children}) => {
   return (
-      <button className='btn btn-danger'>close</button>
+      <button className={className}>{children}</button>
   );
 };
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from "./components/Button/Button";
+import Buttons from "./components/Button/Buttons";
 
 function App() {
   return (
     <>
-      <Button/>
+      <Buttons/>
     </>
   );
 }
