@@ -1,10 +1,14 @@
 import React from 'react';
 
-const Backdrop = () => {
+interface Props {
+  show: boolean;
+}
+
+const Backdrop: React.FC<Props> = ({show}) => {
   return (
     <div
       className='modal-backdrop show'
-      style={{display: "block"}}
+      style={{display: show ? "block" : 'none'}}
     />
   );
 };
