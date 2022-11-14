@@ -4,10 +4,41 @@ import Modal from "../Modal/Modal";
 import Alert from "../Alert/Alert";
 
 const Buttons = () => {
+
+  const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
-  const openAlert = () => setShowAlert(true);
-  const closeModal = () => setShowModal(false)
-  const closeAlert = () => setShowAlert(false)
+  const closeModal = () => setShowModal(false);
+
+  const [showAlert, setShowAlert] = useState([
+    {show: false, id: Math.random() * 2000},
+    {show: false, id: Math.random() * 2000},
+  ]);
+
+  const openAlert = () =>  {
+    setShowAlert(prev => prev.map(item => {
+      return {
+        ...item,
+        show: true,
+      }
+    }))
+  };
+
+  const closeAlert = (id:number) => {
+    setShowAlert(prevState => prevState.map(item => {
+      return item.id === id ? {
+        ...item,
+        show: false,
+      } : item;
+    }));
+  };
+
+  const clickDismissible = () => {
+    const alertsCopy = [...showAlert];
+    const alertCopy = {...alertsCopy[1]};
+    alertCopy.show = false;
+    alertsCopy[1] = alertCopy;
+    setShowAlert(alertsCopy);
+  };
 
   const getContinue = () => {
     alert('alert');
@@ -23,15 +54,17 @@ const Buttons = () => {
     {type: 'm-1 btn btn-danger', label: 'Close', onClick: closeModal},
   ];
 
-  const [showModal, setShowModal] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-
   return (
     <>
       <h4>Buttons:</h4>
       {buttons.map((button) => {
         return (
-          <Button type={button.type} onClick={button.onClick} label={button.label}/>
+          <Button
+            key={Math.random()}
+            type={button.type}
+            onClick={button.onClick}
+            label={button.label}
+          />
         )
       })}
 
@@ -44,22 +77,31 @@ const Buttons = () => {
         <div className='text-end'>
           {buttonsInModal.map((button) => {
             return (
-              <Button type={button.type} onClick={button.onClick} label={button.label}/>
+              <Button
+                key={Math.random()}
+                type={button.type}
+                onClick={button.onClick}
+                label={button.label}
+              />
             )
           })}
         </div>
       </Modal>
 
       <Alert
-        show={showAlert}
+        id={showAlert[0].id}
+        show={showAlert[0].show}
         type='alert alert-warning'
         onDismiss={closeAlert}>
         This is a warning type alert
       </Alert>
 
       <Alert
-        show={showAlert}
-        type='alert alert-success'>
+        id={showAlert[1].id}
+        show={showAlert[1].show}
+        type='alert alert-success'
+        clickDismissible={clickDismissible}
+      >
         This is a success type alert
       </Alert>
     </>
